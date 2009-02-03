@@ -1,0 +1,24 @@
+--- src/rpc/rpc_transport.ml.orig	2009-02-03 16:13:34.000000000 +0000
++++ src/rpc/rpc_transport.ml	2009-02-03 16:16:50.000000000 +0000
+@@ -236,7 +236,7 @@
+     with
+       | Unix.Unix_error((Unix.EAFNOSUPPORT|Unix.EOPNOTSUPP),_,_) -> 
+ 	  Some `Implied
+-      | Unix.Unix_error(Unix.ENOTCONN,_,_) -> 
++      | Unix.Unix_error((Unix.ENOTCONN|Unix.EINVAL),_,_) -> 
+ 	  (* ENOTCONN is special because we allow to set the peer address
+              per datagram in this case!
+            *)
+@@ -552,9 +552,10 @@
+       `Sockaddr(Unix.getpeername fd)
+     with
+ 	(* also catching ENOTCONN - which might happen for strange socket
+-           implementations
++           implementations. EINVAL is thrown on MacOS 10.5 instead of ENOTCONN
+          *)
+-      | Unix.Unix_error((Unix.EAFNOSUPPORT|Unix.EOPNOTSUPP|Unix.ENOTSOCK|Unix.ENOTCONN),
++      | Unix.Unix_error((Unix.EAFNOSUPPORT|Unix.EOPNOTSUPP|Unix.ENOTSOCK|
++                         Unix.ENOTCONN|Unix.EINVAL),
+ 			_,_) -> `Implied in
+   let mplex = 
+     Uq_engines.create_multiplex_controller_for_connected_socket

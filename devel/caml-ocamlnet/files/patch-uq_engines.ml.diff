@@ -1,0 +1,38 @@
+--- src/equeue/uq_engines.ml.orig	2009-02-03 16:17:18.000000000 +0000
++++ src/equeue/uq_engines.ml	2009-02-03 16:18:51.000000000 +0000
+@@ -1456,7 +1456,7 @@
+       (* fd is a connected socket *)
+       `Recv_send addr
+     with
+-      | Unix.Unix_error(Unix.ENOTCONN,_,_) ->
++      | Unix.Unix_error((Unix.ENOTCONN|Unix.EINVAL),_,_) ->
+ 	  (* fd is an unconnected socket *)
+ 	  `Recvfrom_sendto
+       | Unix.Unix_error(Unix.ENOTSOCK,_,_) -> 
+@@ -2329,7 +2329,7 @@
+ 		  ignore(Unix.getpeername s); 
+ 		  `Done(`Socket(s, getsockspec stype s))
+ 		with
+-		  | Unix.Unix_error(Unix.ENOTCONN,_,_) ->
++		  | Unix.Unix_error((Unix.ENOTCONN|Unix.EINVAL),_,_) ->
+ 		      (* We did not succeed connecting. ENOTCONN is just a
+                        * substitute error code, not the real error, however.
+                        *)
+@@ -2349,7 +2349,7 @@
+ 			       ignore(Unix.getpeername s); 
+ 			       `Done(`Socket(s, getsockspec stype s))
+ 			     with
+-			       | Unix.Unix_error(Unix.ENOTCONN,_,_) ->
++			       | Unix.Unix_error((Unix.ENOTCONN|Unix.EINVAL),_,_) ->
+ 				   (* See comment above *)
+ 				   `Error (getconnerror s)
+ 			       | error -> 
+@@ -2503,7 +2503,7 @@
+ 		       let ps =
+ 			 try getpeerspec Unix.SOCK_STREAM sock'
+ 			 with
+-			   | Unix.Unix_error(Unix.ENOTCONN,_,_) as e ->
++			   | Unix.Unix_error((Unix.ENOTCONN|Unix.EINVAL),_,_) as e ->
+ 			       Unix.close sock';
+ 			       raise e in
+ 		       acc_engine <- None;

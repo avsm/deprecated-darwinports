@@ -1,0 +1,11 @@
+--- src/netclient/http_client.ml.orig	2009-02-03 16:19:25.000000000 +0000
++++ src/netclient/http_client.ml	2009-02-03 16:19:50.000000000 +0000
+@@ -1567,7 +1567,7 @@
+ 	      if not (List.mem fd fd_list) then
+ 		Hashtbl.replace rev_inactive_conns peer (fd :: fd_list)
+ 	    with
+-	      | Unix.Unix_error(Unix.ENOTCONN,_,_) ->
++	      | Unix.Unix_error((Unix.ENOTCONN|Unix.EINVAL),_,_) ->
+ 		  self # forget_connection fd
+ 	  )
+ 
