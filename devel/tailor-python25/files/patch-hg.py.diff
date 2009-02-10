@@ -1,0 +1,26 @@
+--- vcpx/repository/hg.py.orig	2009-02-10 11:10:31.000000000 +0000
++++ vcpx/repository/hg.py	2009-02-10 11:11:32.000000000 +0000
+@@ -100,7 +100,7 @@
+ 
+         from mercurial.node import bin
+         for rev in xrange(repo.changelog.rev(bin(sincerev)) + 1,
+-                          repo.changelog.count()):
++                          len(repo.changelog)):
+             yield self._changesetForRevision(repo, str(rev))
+ 
+     def _applyChangeset(self, changeset):
+@@ -343,9 +343,12 @@
+             if cmdutil.findcmd.func_code.co_argcount == 2:     # 0.9.4
+                 def findcmd(cmd):
+                     return cmdutil.findcmd(self._getUI(), cmd)
+-            elif cmdutil.findcmd.func_code.co_argcount == 3:   # 0.9.5
++            elif cmdutil.findcmd.func_code.co_argcount == 3: #  >= 0.9.5
+                 def findcmd(cmd):
+-                    return cmdutil.findcmd(self._getUI(), cmd, commands.table)
++                    if cmdutil.findcmd.func_code.co_varnames[0] == "ui": # < 1.1.0
++                        return cmdutil.findcmd(self._getUI(), cmd, commands.table)
++                    else: # >= 1.1.0
++                        return cmdutil.findcmd(cmd, commands.table)
+         elif hasattr(commands, 'findcmd'):         # < 0.9.4
+             if commands.findcmd.func_code.co_argcount == 1:
+                 findcmd = commands.findcmd
