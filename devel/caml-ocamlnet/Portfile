@@ -29,7 +29,8 @@ depends_lib         port:ocaml \
                     port:caml-findlib \
                     port:caml-pcre
 
-patchfiles          patch-http_client.ml.diff patch-rpc_transport.ml.diff patch-uq_engines.ml.diff
+patchfiles          patch-http_client.ml.diff patch-rpc_transport.ml.diff \
+                    patch-uq_engines.ml.diff patch-nethttpd_kernel.ml.diff
 
 post-patch {
     set ocaml_site_path [exec ocamlfind printconf destdir]
