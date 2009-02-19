@@ -1,0 +1,17 @@
+--- Makefile.in.orig	2009-02-19 12:47:49.000000000 +0000
++++ Makefile.in	2009-02-19 12:51:53.000000000 +0000
+@@ -1,4 +1,4 @@
+-prefix=@prefix@
++prefix=$(DESTDIR)@prefix@
+ exec_prefix=@exec_prefix@
+ bindir=@bindir@
+ 
+@@ -42,7 +42,7 @@
+ # one in .
+ install: sqlite3.cma sqlite3.cmxa sqlite3top
+ 	[ -f *.so ] && SO_FILES=*.so; \
+-	ocamlfind install sqlite3 META sqlite3.cmi sqlite3.mli sqlite3.cma *.cmxa *.a *.cmx $$SO_FILES
++	ocamlfind install -ldconf ignore -destdir $(DESTDIR)/`ocamlfind printconf destdir` sqlite3 META sqlite3.cmi sqlite3.mli sqlite3.cma *.cmxa *.a *.cmx $$SO_FILES
+ 	ocamlfind ocamlmktop -o sqlite3top -package "sqlite3" sqlite3.cma
+ 	$(INSTALL) sqlite3top $(bindir)/sqlite3top
+ 
