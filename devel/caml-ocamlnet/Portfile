@@ -4,6 +4,7 @@ PortSystem          1.0
 
 name                caml-ocamlnet
 version             2.2.9
+revision            1
 categories          devel ml
 maintainers         landonf openmaintainer
 description         Internet protocols and helper data structures for OCaml.
@@ -30,7 +31,8 @@ depends_lib         port:ocaml \
                     port:caml-pcre
 
 patchfiles          patch-http_client.ml.diff patch-rpc_transport.ml.diff \
-                    patch-uq_engines.ml.diff patch-nethttpd_kernel.ml.diff
+                    patch-uq_engines.ml.diff patch-nethttpd_kernel.ml.diff \
+                    patch-netstring_nethttp.ml.diff
 
 post-patch {
     set ocaml_site_path [exec ocamlfind printconf destdir]

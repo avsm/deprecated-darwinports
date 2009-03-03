@@ -1,0 +1,22 @@
+--- src/netstring/nethttp.ml.orig	2009-03-03 02:59:38.000000000 +0000
++++ src/netstring/nethttp.ml	2009-03-03 03:00:25.000000000 +0000
+@@ -353,15 +353,16 @@
+   let l' = List.map (Netencoding.Url.encode ~plus:false) l in
+   Neturl.join_path l'
+ 
+-let uripath_decode s =
++let rec uripath_decode s =
+   let l = Neturl.split_path s in
+   let l' = 
+     List.map
+       (fun u -> 
+ 	 let u' = Netencoding.Url.decode ~plus:false u in
+ 	 if String.contains u' '/' then
+-	   failwith "Nethttp.uripath_decode";
+-	 u')
++             uripath_decode u'
++         else
++             u')
+       l in
+   Neturl.join_path l'
+ 
