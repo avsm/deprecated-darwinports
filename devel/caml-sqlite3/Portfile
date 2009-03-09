@@ -24,7 +24,7 @@ depends_lib         port:ocaml \
                     port:caml-findlib \
                     port:sqlite3
 
-patchfiles          patch-Makefile.in
+patchfiles          patch-Makefile.in.diff
 
 configure.args      --with-sqlite3=${prefix}
 
