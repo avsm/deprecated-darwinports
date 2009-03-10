@@ -1,3 +1,7 @@
+caml-ansicolor 393
+description {OCaml bindings for ANSI colors and cursor movements} portdir devel/caml-ansicolor homepage http://math.umh.ac.be/an/software.php epoch 0 platforms darwin name caml-ansicolor depends_lib {port:ocaml port:caml-findlib} maintainers {anil@recoil.org openmaintainer} long_description {{OCaml bindings for ANSI colors and cursor movements}} version 0.3 categories {devel ml} revision 0
+caml-curses 413
+variants universal variant_desc {universal {Build for multiple architectures}} portdir devel/caml-curses description {OCaml bindings for ncurses} homepage http://www.nongnu.org/ocaml-tmk/ epoch 0 platforms darwin name caml-curses depends_lib {port:ocaml port:caml-findlib} maintainers {anil@recoil.org openmaintainer} long_description {{OCaml bindings for ncurses}} version 1.0.3 categories {devel ml} revision 0
 caml-json-static 555
 description {JSON validator and type converter for OCaml} portdir devel/caml-json-static homepage http://martin.jambon.free.fr/json-static.html epoch 0 platforms darwin name caml-json-static depends_lib {port:ocaml port:caml-findlib port:caml-json-wheel} maintainers anil@recoil.org long_description {This library converts parsed JSON data with an unchecked structure into specialized OCaml types and vice-versa. It is a complement to the caml-json-wheel package which provides a parser and pretty-printer.} version 0.9.6 categories {devel ml} revision 0
 caml-json-wheel 506
