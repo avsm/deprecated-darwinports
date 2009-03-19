@@ -1,5 +1,5 @@
---- src/netclient/http_client.ml.orig	2009-02-03 16:19:25.000000000 +0000
-+++ src/netclient/http_client.ml	2009-02-03 16:19:50.000000000 +0000
+--- src/netclient/http_client.ml.orig	2009-03-18 16:59:19.000000000 +0000
++++ src/netclient/http_client.ml	2009-03-19 00:41:06.000000000 +0000
 @@ -1567,7 +1567,7 @@
  	      if not (List.mem fd fd_list) then
  		Hashtbl.replace rev_inactive_conns peer (fd :: fd_list)
@@ -9,3 +9,19 @@
  		  self # forget_connection fd
  	  )
  
+@@ -4461,6 +4461,15 @@
+ 
+     let http_post url params = (http_post_message url params) # get_resp_body()
+ 
++    let http_post_raw_message ?(callfn=(fun _ -> ())) url raw_param =
++      let m = new post_raw (prepare_url url) raw_param in
++      callfn m;
++      request m 1;
++      m
++
++    let http_post_raw ?(callfn=(fun _ -> ())) url raw_param = 
++      (http_post_raw_message ~callfn url raw_param) # get_resp_body()
++    
+     let http_put_message url content =
+       let m = new put (prepare_url url) content in
+       request m !http_trials;

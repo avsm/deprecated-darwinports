@@ -1,0 +1,37 @@
+--- src/netclient/http_client.mli.orig	2009-03-18 15:26:57.000000000 +0000
++++ src/netclient/http_client.mli	2009-03-19 00:40:15.000000000 +0000
+@@ -1094,6 +1094,13 @@
+       * The list contains the parameters sent with the POST request.
+       *)
+ 
++  val http_post_raw_message: ?callfn:(post_raw -> unit) -> string -> string -> http_call
++    (** Does a "POST" request with the given raw body and returns the reply.
++      * The string contains the raw message body sent with the POST request.
++      * If specified, callfn is applied to the underlying post_raw object before
++      * the request is sent (e.g. to add a custom HTTP header).
++      *)
++
+   val http_put_message : string -> string -> http_call
+     (** Does a "PUT" request with the given URL and returns the reply.
+       * The second argument contains the contents to be put.
+@@ -1112,6 +1119,12 @@
+       * The list contains the parameters send with the POST request.
+      *)
+ 
++  val http_post_raw : ?callfn:(post_raw -> unit) -> string -> string -> string
++    (** Does a "POST" request with the given raw body and returns the reply.
++      * The string contains the raw message body sent with the POST request.
++      * If specified, callfn is applied to the underlying post_raw object before
++      * the request is sent (e.g. to add a custom HTTP header) *)
++
+   val http_put : string -> string -> string
+     (** Does a "PUT" request with the given URL and returns the response body.
+       * The second argument contains the contents to be put.
+@@ -1124,7 +1137,6 @@
+ 
+   val http_verbose : unit -> unit
+     (** Turns on debug messages on stderr. *)
+-
+ end
+ 
+ (**/**)
