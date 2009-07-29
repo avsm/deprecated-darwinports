@@ -22,7 +22,7 @@ checksums           md5     7a9fb5adf16ca411389fc07ed7ddaa66 \
 depends_lib         port:ocaml 
 
 set ocamlfind_destdir ${destroot}${prefix}/lib/ocaml/site-lib
-destroot.env        OCAMLFIND_INSTFLAGS="-destdir $ocamlfind_destdir"
+destroot.env        OCAMLFIND_INSTFLAGS="-ldconf ignore -destdir $ocamlfind_destdir"
 
 pre-destroot {
     file mkdir $ocamlfind_destdir
