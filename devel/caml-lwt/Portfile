@@ -1,0 +1,27 @@
+# $Id$
+
+PortSystem          1.0
+
+name                caml-lwt
+version             1.1.0
+categories          devel ml
+maintainers         anil@recoil.org openmaintainer
+description         Cooperative threading library for OCaml
+long_description    LWT is a lightweight thread library for OCaml to implement \
+                    co-operative concurrency.
+homepage            http://ocsigen.org/lwt
+platforms           darwin
+master_sites        http://ocsigen.org/download/
+
+distname            lwt-${version}
+
+depends_lib         port:ocaml port:caml-findlib port:caml-ssl
+
+checksums           md5     dcc43458f3e39647bb7992749de43fa5 \
+                    sha1    838d99ce53accb4d0a393c4dd0f757d130a6bc2c \
+                    rmd160  e7359a29af3c91ac006dfb3fc1150264aa27927b
+
+use_configure       no
+
+set ocamlfind_destdir ${destroot}${prefix}/lib/ocaml/site-lib
+destroot.post_args        DESTDIR="$ocamlfind_destdir"
