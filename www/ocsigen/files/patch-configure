@@ -1,0 +1,11 @@
+--- configure.orig	2009-07-31 22:03:06.000000000 +0100
++++ configure	2009-07-31 22:03:23.000000000 +0100
+@@ -606,7 +606,7 @@
+ 
+ if [ "$enable_dbm" -gt 0 ]; then
+     printf "%s" "Checking for dbm... "
+-    if ocamlc -custom -o /dev/null dbm.cma >/dev/null 2>/dev/null; then
++    if ocamlc -custom -o dummy dbm.cma >/dev/null 2>/dev/null; then
+         echo "found"
+     elif [ "$enable_dbm" -gt 1 ]; then
+         echo "not found, but --enable-dbm specified"
