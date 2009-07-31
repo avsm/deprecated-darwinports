@@ -1,0 +1,38 @@
+# $Id$
+
+PortSystem          1.0
+
+name                ocsigen
+version             1.2.0
+categories          www ml
+maintainers         anil@recoil.org openmaintainer
+description         Fast web server for OCaml
+long_description    Web server for OCaml which uses lightweight threading.
+homepage            http://ocsigen.org/
+platforms           darwin
+master_sites        http://ocsigen.org/download/
+
+distname            ocsigen-${version}
+
+checksums           md5     4e816b016a01548e1b889cde57ff9618 \
+                    sha1    6f16c238253a6bb81ef30748dbc6b165b3acedb8 \
+                    rmd160  bddabaf108e428359b55c0b7a7c76fe1bb19e4fa
+
+depends_lib         port:ocaml port:caml-findlib port:caml-ssl port:caml-lwt \
+                    port:caml-ocamlnet port:caml-pcre port:cryptokit
+
+configure.pre_args  --prefix ${prefix} --staticpagesdir ${prefix}/var/www \
+                    --datadir ${prefix}/var/lib --sysconfdir ${prefix}/etc \
+                    --commandpipe ${prefix}/var/run/ocsigen_command \
+                    --ocsigen-user ocsigen --ocsigen-group ocsigen
+
+#adduser ocsigen
+#addgroup ocsigen
+
+destroot.post_args  TEMPROOT=${destroot} CHOWN=/usr/bin/true
+use_parallel_build  no
+
+build.target        depend all
+destroot.target     installnodoc
+patchfiles          patch-Makefile
+
