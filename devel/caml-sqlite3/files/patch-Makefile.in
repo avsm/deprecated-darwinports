@@ -1,0 +1,35 @@
+--- Makefile.in.orig	2009-07-31 18:41:04.000000000 +0100
++++ Makefile.in	2009-07-31 18:45:10.000000000 +0100
+@@ -30,7 +30,7 @@
+ 
+ bytecode: sqlite3.cma sqlite3top
+ 
+-opt: sqlite3.cmxa
++opt: sqlite3.cmxs
+ 
+ clean:
+ 	rm -f *.o *.cmo *.cmx *.cmi *.so *.cma *.cmxa *.a sqlite3top
+@@ -40,11 +40,9 @@
+ 
+ # install rebuilds sqlite3top to point to the findlib-managed dll and not the
+ # one in .
+-install: sqlite3.cma sqlite3.cmxa sqlite3top
++install: sqlite3.cma sqlite3.cmxa sqlite3.cmxs sqlite3top
+ 	[ -f *.so ] && SO_FILES=*.so; \
+-	ocamlfind install sqlite3 META sqlite3.cmi sqlite3.mli sqlite3.cma *.cmxa *.a *.cmx $$SO_FILES
+-	ocamlfind ocamlmktop -o sqlite3top -package "sqlite3" sqlite3.cma
+-	$(INSTALL) sqlite3top $(bindir)/sqlite3top
++	ocamlfind install -ldconf ignore -destdir $(DESTDIR)/`ocamlfind printconf destdir` sqlite3 META sqlite3.cmi sqlite3.mli sqlite3.cma *.cmxa *.a *.cmx *.cmxs $$SO_FILES
+ 
+ remove: uninstall
+ uninstall:
+@@ -64,6 +62,9 @@
+ sqlite3.cmxa: sqlite3.cmx sqlite3.o sqlite3_stubs.o
+ 	ocamlmklib -o sqlite3 -oc sqlite3_stubs sqlite3.cmx sqlite3_stubs.o -L. $(LDFLAGS) $(LIBS) $(MKLIBFLAGS)
+ 
++sqlite3.cmxs: sqlite3.cmxa
++	ocamlopt -shared -linkall -o $@ $< -cclib "-L. $(LDFLAGS)" $(OCFLAGS)
++
+ sqlite3.cmo: sqlite3.cmi sqlite3.ml
+ 
+ .SUFFIXES: .ml .mli .cmo .cmi .cmx

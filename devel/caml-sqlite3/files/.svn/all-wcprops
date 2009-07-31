@@ -1,0 +1,11 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/repository/macports/!svn/ver/53823/trunk/dports/devel/caml-sqlite3/files
+END
+patch-Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/repository/macports/!svn/ver/53823/trunk/dports/devel/caml-sqlite3/files/patch-Makefile.in
+END
