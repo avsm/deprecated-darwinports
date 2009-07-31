@@ -34,5 +34,3 @@ use_parallel_build  no
 
 build.target        depend all
 destroot.target     installnodoc
-patchfiles          patch-Makefile
-
