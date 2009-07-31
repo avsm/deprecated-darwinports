@@ -1,0 +1,10 @@
+--- configure.orig	2009-07-31 19:11:26.000000000 +0100
++++ configure	2009-07-31 19:11:48.000000000 +0100
+@@ -573,6 +573,7 @@
+       mksharedlibrpath="-rpath "
+       shared_libraries_supported=true;;
+     i[3456]86-*-darwin*)
++      cmxs="cmxs"
+       mksharedlib="$bytecc -bundle -flat_namespace -undefined suppress -read_only_relocs suppress"
+       bytecccompopts="$dl_defs $bytecccompopts"
+       dl_needs_underscore=false
