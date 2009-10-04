@@ -24,7 +24,8 @@ depends_lib         port:ocaml port:caml-findlib port:caml-ssl port:caml-lwt \
 configure.pre_args  --prefix ${prefix} --staticpagesdir ${prefix}/var/www \
                     --datadir ${prefix}/var/lib --sysconfdir ${prefix}/etc \
                     --commandpipe ${prefix}/var/run/ocsigen_command \
-                    --ocsigen-user ocsigen --ocsigen-group ocsigen
+                    --ocsigen-user ocsigen --ocsigen-group ocsigen \
+                    --disable-nativecode
 
 #adduser ocsigen
 #addgroup ocsigen
