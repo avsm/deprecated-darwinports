@@ -3,25 +3,35 @@
 PortSystem          1.0
 
 name                caml-lwt
-version             1.1.0
+version             2.0.0
+distname            lwt-${version}+rc1
+revision            1
 categories          devel ml
-maintainers         anil@recoil.org openmaintainer
+maintainers         avsm
 description         Cooperative threading library for OCaml
 long_description    LWT is a lightweight thread library for OCaml to implement \
                     co-operative concurrency.
 homepage            http://ocsigen.org/lwt
 platforms           darwin
 master_sites        http://ocsigen.org/download/
+patchfiles          patch-Makefile.diff patch-myocamlbuild.diff
 
-distname            lwt-${version}
+depends_lib         port:ocaml port:caml-findlib port:caml-ssl \
+                    port:caml-react port:caml-text
 
-depends_lib         port:ocaml port:caml-findlib port:caml-ssl
-
-checksums           md5     dcc43458f3e39647bb7992749de43fa5 \
-                    sha1    838d99ce53accb4d0a393c4dd0f757d130a6bc2c \
-                    rmd160  e7359a29af3c91ac006dfb3fc1150264aa27927b
+checksums           md5     da266196ee3a1245eed3cf5df09f9ce1 \
+                    sha1    1077fda09eb6c6b5b2795466c1d316aea8dbce63 \
+                    rmd160  c3bc6b51a51d0c16c53765bb9407f9d49953872d
 
 use_configure       no
+use_parallel_build  no
 
 set ocamlfind_destdir ${destroot}${prefix}/lib/ocaml/site-lib
 destroot.post_args        DESTDIR="$ocamlfind_destdir"
+build.target        "all doc"
+
+post-destroot {
+        xinstall -d -755 ${destroot}${prefix}/share/doc/${name}
+        eval xinstall -m 644 [glob ${worksrcpath}/_build/lwt.docdir/*] \
+            ${destroot}/${prefix}/share/doc/${name}
+}
